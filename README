@@ -1,0 +1,16 @@
+getquote
+
+This program gets prices for any stock quote that is entered in on the command
+line, and then calculates various percentages based on the high close and the
+high high. Right now, it calculates 1%, 2%, 4% and 10%. This will be a 
+configurable option later on.
+
+It does this by going to Yahoo, downloading a csv file and then parsing the
+file for the necessary data. Right now, it takes this information and creates
+an HTML page. This will be refined later on to be able to define where to put
+it. Right now the path is /var/www, which assumes a Linux OS.
+
+I will be updating this program periodically and things might change with
+outputs and percentages. Stay tuned.
+
+Jason
