@@ -1,7 +1,7 @@
 import urllib2
 import datetime
 import sys
-import sqlite3
+
 
 path = '/var/www/'
 
@@ -19,7 +19,7 @@ class Info:
 
 #Creates an HTML page with the stock information organized into a table.
 def MakeHTMLTable(a,b,c,d,e,f,infoList):
-    page = open(path + "table.html" , "w")
+    page = open(path + "/table.html" , "w")
     page.write("<html><head><script src=\"jquery-1.9.1.min.js\"></script>\n")
     page.write("<script src=\"test-jquery.js\"></script>")
     page.write("</head>\n<body>\n")
@@ -50,7 +50,7 @@ def MakeHTMLTable(a,b,c,d,e,f,infoList):
 
 
 def MakeHTMLList(a,b,c,d,e,f,infoList):
-    page = open(path + "list.html" , "w")
+    page = open(path + "/list.html" , "w")
     page.write("<html><head><script src=\"jquery-1.9.1.min.js\"></script>\n")
     page.write("<script src=\"test-jquery.js\"></script>")
     page.write("</head>\n<body>\n")
@@ -131,9 +131,27 @@ def getStockPrices(a,b,c,d,e,f,stock):
 
     return info
 
-#    
+
+def parseConfig(line):
+
+    #Skip lines that begin with #.
+    if(line[0] != '#'):
+        line = line.split('=')
+
+        if(line[0] == "path"):
+            #print "Found path config"
+            global path
+            path = line[1].rstrip('\n') 
+
+#End of parseFile
+
+
+
+#############    
 #
 #       Main
+#
+#############
 #
 #Get historical prices from Yahoo.
 #Send stock symbols as a parameter.
@@ -147,6 +165,17 @@ if len(sys.argv) > 1:
 else:
     print "Need at least one stock ticker parameter."
     sys.exit()
+
+#try:
+#   with open('getquote.conf'): pass
+#except IOError:
+#   print 'Oh dear.'
+
+f = open('getquote.conf')
+
+for line in f:
+    parseConfig(line)
+    
 
 #print stockList
 
